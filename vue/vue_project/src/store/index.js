@@ -6,30 +6,31 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    examples: [],
+    sampleItems: [],
   },
   getters: {
-    examples: state => state.examples,
+    sampleItems: state => state.sampleItems,
   },
   actions: {
-    async loadExamples({commit}) {
-      const res = await api.get('examples');
-      commit('setExamples', { examples: res.data.items });
-      return res.data.items;
+    async loadSampleItems({commit}) {
+      const res = await api.get('sample_items');
+      const sampleItems = res.data.sample_items;
+      commit('setSampleItems', { sampleItems });
+      return sampleItems;
     },
-    async addExample({commit}, { text }) {
-      console.log(api.defaults.headers)
-      const res = await api.post('examples', { example: { text: text }});
-      commit('addExamples', { example: res.data.item });
-      return res.data.item;
+    async addSampleItem({commit}, { text }) {
+      const res = await api.post('sample_items', { sample_item: { text: text }});
+      const sampleItem = res.data.sample_item;
+      commit('addSampleItem', { sampleItem });
+      return sampleItem;
     },
   },
   mutations: {
-    setExamples(state, { examples }) {
-      state.examples = examples;
+    setSampleItems(state, { sampleItems }) {
+      state.sampleItems = sampleItems;
     },
-    addExamples(state, { example }) {
-      state.examples.push(example);
+    addSampleItem(state, { sampleItem }) {
+      state.sampleItems.push(sampleItem);
     },
   },
   modules: {}
